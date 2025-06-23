@@ -1,0 +1,72 @@
+;; 代码文件分析器
+;; 专门用于分析Python、JavaScript、Java等代码文件
+;; 使用示例: 修改文件路径后运行
+
+[
+  ;; 配置：要分析的代码文件
+  [:p "💻 代码文件分析器"]
+  [:p "🎯 分析文件: beaver/core/decorators.py"]
+  
+  ;; 步骤1: 获取代码文件信息
+  [:p "📊 获取代码文件基础信息..."]
+  [:file/info "beaver/core/decorators.py"]
+  
+  ;; 步骤2: 统计代码行数
+  [:p "📏 统计代码规模..."]
+  [":p" "代码文件字符数: " [:str/length [:file/read "beaver/core/decorators.py"]]]
+  
+  ;; 步骤3: 代码质量分析
+  [:p "🔍 进行代码质量分析..."]
+  [:file/write "analysis_results/code_analysis.md"
+   [:nexus/sync
+    {"provider" "openrouter" "model" "gemini-2.5-flash"}
+    [":msg/v2m" [
+      [":system" "你是一个资深的软件工程师和代码审查专家。请对提供的代码进行全面的质量分析。"]
+      [":user" [":p"
+        "请对以下代码文件进行专业的代码审查和分析，重点关注："
+        "\n\n## 代码分析维度："
+        "\n🏗️ **架构设计**: 模块结构、设计模式、职责分离"
+        "\n📝 **代码质量**: 可读性、可维护性、复杂度"
+        "\n🛡️ **最佳实践**: 命名规范、函数设计、异常处理"  
+        "\n🔧 **性能优化**: 算法效率、内存使用、潜在瓶颈"
+        "\n🧪 **测试覆盖**: 可测试性、边界情况处理"
+        "\n📚 **文档质量**: 注释完整性、文档字符串"
+        "\n🔒 **安全性**: 潜在安全风险、输入验证"
+        "\n\n## 请提供:"
+        "\n1. 📋 **文件概述**: 主要功能和作用"
+        "\n2. ⭐ **质量评分**: 各维度评分（1-10分）"
+        "\n3. ✅ **优点分析**: 代码的亮点和优势"
+        "\n4. ⚠️ **问题识别**: 潜在问题和改进点"
+        "\n5. 💡 **优化建议**: 具体的改进建议"
+        "\n6. 🎯 **重构建议**: 如有必要的重构建议"
+        "\n\n## 代码内容:"]]
+      [":user" [:file/read "beaver/core/decorators.py"]]
+    ]]]]
+  
+  ;; 步骤4: 生成代码摘要
+  [:p "📋 生成代码摘要..."]
+  [:file/write "analysis_results/code_summary.json"
+   [:nexus/quick-chat
+    [":p"
+     "请分析以下代码并生成JSON格式摘要:"
+     "\n{\"language\": \"编程语言\", \"main_functions\": [\"函数列表\"], \"complexity\": \"复杂度\", \"quality_score\": \"评分\"}"
+     "\n\n代码内容: " [:file/read "beaver/core/decorators.py"]]]]
+  
+  ;; 步骤5: 提取技术关键词
+  [:p "🏷️ 提取技术关键词..."]
+  [:file/write "analysis_results/code_keywords.txt"
+   [:nexus/quick-chat
+    [":p"
+     "请从以下代码中提取技术关键词、函数名、重要概念等，格式如下:"
+     "\n\n🔧 核心函数: func1, func2, func3..."
+     "\n📦 重要概念: concept1, concept2, concept3..."
+     "\n🏷️ 技术标签: #python, #decorator, #framework..."
+     "\n\n代码内容: " [:file/read "beaver/core/decorators.py"]]]]
+  
+  ;; 步骤6: 完成分析
+  [:p "✅ 代码分析完成!"]
+  [:p "📊 详细分析: analysis_results/code_analysis.md"]
+  [:p "📋 代码摘要: analysis_results/code_summary.json"]
+  [:p "🏷️ 技术关键词: analysis_results/code_keywords.txt"]
+  [:p "💡 可修改文件路径分析其他代码文件"]
+] 

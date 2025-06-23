@@ -1,0 +1,11 @@
+;; 文件操作示例（注释掉避免实际执行）
+;; [:file/write "test.txt" "Hello World"]
+;; [:file/read "test.txt"]  
+;; [:file/info "test.txt"]
+
+;; 替代示例：字符串操作
+[
+  [:str/lower "HELLO WORLD"]
+  [:str/upper "hello world"] 
+  [:p "文件操作示例（已注释）"]
+]

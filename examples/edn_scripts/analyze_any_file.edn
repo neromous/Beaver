@@ -1,0 +1,53 @@
+;; 通用文件分析脚本
+;; 用法: 修改下面的文件路径，然后运行此脚本
+;; python -m beaver.cli.edn_runner examples/edn_scripts/analyze_any_file.edn
+
+[
+  ;; 配置区域 - 在这里修改要分析的文件路径
+  [:p "🎯 通用文件分析工具"]
+  [:p "📝 当前分析文件: README.md"]
+  [:p "💡 提示: 修改脚本中的文件路径来分析其他文件"]
+  
+  ;; 步骤1: 显示文件基本信息
+  [:p "📊 获取文件信息..."]
+  [:file/info "README.md"]
+  
+  ;; 步骤2: 预览文件内容
+  [:p "👀 预览文件内容..."]
+  [:str/length [:file/read "README.md"]]
+  
+  ;; 步骤3: AI 深度分析
+  [:p "🤖 开始 AI 深度分析..."]
+  [:file/write "analysis_results/analysis_report.md" 
+   [:nexus/sync 
+    {"provider" "openrouter" "model" "gemini-2.5-flash"}
+    [":msg/v2m" [
+      [":system" "你是一个专业的文档分析师和技术专家。请对用户提供的文件内容进行全面、深入的分析。"]
+      [":user" [":p" 
+        "请对以下文件内容进行专业分析，提供详细报告："
+        "\n\n## 分析要求："
+        "\n1. **文件类型识别**: 判断文件格式、语言类型、用途等"
+        "\n2. **内容结构分析**: 分析文档/代码的组织结构和层次"
+        "\n3. **关键信息提取**: 提取重要的技术点、概念、数据等"
+        "\n4. **质量评估**: 评估内容的完整性、准确性、可读性"
+        "\n5. **技术深度**: 分析技术复杂度和实现质量"
+        "\n6. **改进建议**: 提供具体的优化和改进建议"
+        "\n7. **应用价值**: 评估内容的实际应用价值和影响"
+        "\n\n## 文件内容："]]
+      [":user" [:file/read "README.md"]]
+    ]]]]
+  
+  ;; 步骤4: 生成文件摘要
+  [:p "📋 生成文件摘要..."]
+  [:file/write "analysis_results/file_summary.txt"
+   [:nexus/quick-chat 
+    [":p" 
+     "请为以下文件内容生成一个简洁的摘要（300字以内）："
+     "\n\n文件内容: " [:file/read "README.md"]]]]
+  
+  ;; 步骤5: 完成报告
+  [:p "✅ 文件分析完成!"]
+  [:p "📁 详细报告: analysis_results/analysis_report.md"]
+  [:p "📄 文件摘要: analysis_results/file_summary.txt"]
+  [:p "💡 提示: 可以修改脚本中的文件路径来分析其他文件"]
+] 

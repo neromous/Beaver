@@ -1,0 +1,23 @@
+;; 文件分析与 LLM 判断复合操作示例
+;; 读取本地文件 → LLM 分析 → 保存结果
+
+[
+  ;; 步骤1: 读取待分析的文本文件
+  [:p "🔍 开始文件分析流程"]
+  [:p "📖 正在读取文件内容..."]
+  
+  ;; 步骤2: 使用 LLM 分析文件内容
+  [:p "🤖 开始 AI 分析..."]
+  [:file/write "analysis_results/file_analysis_result.md" 
+   [:nexus/sync 
+    {"provider" "openrouter" "model" "gemini-2.5-flash"}
+    [":msg/v2m" [
+      [":system" "你是一个资深的技术文档分析专家。请仔细分析用户提供的文件内容，给出专业的评估和建议。"]
+      [":user" "请分析以下文件内容，提供详细的分析报告，包括：\n1. 文件类型和主要内容\n2. 技术特点和结构\n3. 关键信息提取\n4. 质量评估和改进建议\n\n文件内容："]
+      [":user" [:file/read "README.md"]]
+    ]]]]
+  
+  ;; 步骤3: 完成提示
+  [:p "✅ 文件分析流程完成"]
+  [:p "📁 分析结果已保存到 analysis_results/file_analysis_result.md"]
+] 

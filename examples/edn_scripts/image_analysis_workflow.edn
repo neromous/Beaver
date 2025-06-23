@@ -1,0 +1,83 @@
+;; 图像分析与综合处理复合操作示例
+;; 读取图片 → LLM 分析 → 结合文件夹内容 → 综合分析 → 保存结果
+
+[
+  ;; 步骤1: 项目初始化
+  [:p "🖼️ 开始图像分析综合处理流程"]
+  [:dir/create "image_analysis_results"]
+  
+  ;; 步骤2: 扫描图片文件（假设存在示例图片）
+  [:p "📂 扫描图片文件"]
+  [:dir/list "."]
+  
+  ;; 步骤3: 图片基础分析（使用示例图片路径）
+  [:p "🔍 分析图片内容"]
+  ;; 注意：这里使用占位符路径，实际使用时需要替换为真实图片路径
+  ;; [:file.upload/img "screenshot.png"]
+  
+  ;; 步骤4: 创建图片分析消息
+  [:p "📝 准备图片分析任务"]
+  [:user "请分析这张图片，提供以下信息：\n1. 图片主要内容描述\n2. 技术特征识别\n3. 可能的用途分析\n4. 改进建议"]
+  ;; [:user "图片内容：" [:file.upload/img "screenshot.png"]]
+  
+  ;; 步骤5: 扫描相关文档文件
+  [:p "📋 扫描相关文档"]
+  [:file/info "README.md"]
+  [:file/info "beaver/__init__.py"]
+  
+  ;; 步骤6: 创建综合分析任务
+  [:p "🧠 准备综合分析任务"]
+  [:user "基于以下信息进行综合分析：\n1. 项目主要文档内容\n2. 代码结构信息\n3. 图片分析结果\n\n请提供综合评估报告"]
+  
+  ;; 步骤7: 读取项目文档内容
+  [:p "📖 读取项目文档"]
+  [:file/read "README.md"]
+  
+  ;; 步骤8: 执行综合 LLM 分析
+  [:p "🤖 执行综合 LLM 分析"]
+  [:nexus/sync [
+    [:system "你是一个资深的产品分析师和技术顾问。请基于提供的多模态信息（文档、代码、图片）进行综合分析，提供专业的评估报告。"]
+    [:user "请基于以下多维度信息进行综合分析：\n\n## 项目文档分析\n请分析项目的核心功能和架构。\n\n## 技术实现分析\n请评估代码质量和设计模式。\n\n## 视觉内容分析\n如果有图片，请分析其技术特征。\n\n## 综合评估要求\n1. 项目完整性评估\n2. 技术架构优劣分析\n3. 用户体验评估\n4. 改进建议\n5. 发展方向建议"]
+    [:user "项目文档内容：\n" [:file/read "README.md"]]
+    [:user "项目信息：Beaver DSL 框架 - 基于 EDN 的可扩展功能框架"]
+  ]]
+  
+  ;; 步骤9: 保存综合分析结果
+  [:p "💾 保存综合分析结果"]
+  [:file/write "image_analysis_results/comprehensive_analysis.md" [:nexus/sync [
+    [:system "你是一个资深的产品分析师和技术顾问。请基于提供的多模态信息（文档、代码、图片）进行综合分析，提供专业的评估报告。"]
+    [:user "请基于以下多维度信息进行综合分析：\n\n## 项目文档分析\n请分析项目的核心功能和架构。\n\n## 技术实现分析\n请评估代码质量和设计模式。\n\n## 视觉内容分析\n如果有图片，请分析其技术特征。\n\n## 综合评估要求\n1. 项目完整性评估\n2. 技术架构优劣分析\n3. 用户体验评估\n4. 改进建议\n5. 发展方向建议"]
+    [:user "项目文档内容：\n" [:file/read "README.md"]]
+    [:user "项目信息：Beaver DSL 框架 - 基于 EDN 的可扩展功能框架"]
+  ]]]
+  
+  ;; 步骤10: 创建分析报告摘要
+  [:p "📊 创建分析报告摘要"]
+  [:file/write "image_analysis_results/analysis_summary.json" "{
+  \"analysis_type\": \"综合多模态分析\",
+  \"timestamp\": \"2025-06-24T01:00:00Z\",
+  \"input_sources\": [
+    \"README.md\",
+    \"项目代码结构\",
+    \"图片内容（如有）\"
+  ],
+  \"output_files\": [
+    \"comprehensive_analysis.md\",
+    \"analysis_summary.json\"
+  ],
+  \"analysis_dimensions\": [
+    \"项目文档分析\",
+    \"技术实现评估\",
+    \"视觉内容分析\",
+    \"综合评估建议\"
+  ],
+  \"status\": \"completed\"
+}"]
+  
+  ;; 步骤11: 生成最终报告索引
+  [:p "📋 生成最终报告索引"]
+  [:file/write "image_analysis_results/index.md" "# 图像分析综合处理报告\n\n## 分析概览\n- 分析时间: 2025-06-24\n- 分析类型: 多模态综合分析\n- 处理状态: ✅ 完成\n\n## 报告文件\n1. [comprehensive_analysis.md](./comprehensive_analysis.md) - 详细综合分析报告\n2. [analysis_summary.json](./analysis_summary.json) - 分析摘要数据\n3. [index.md](./index.md) - 本索引文件\n\n## 分析维度\n- 📖 项目文档分析\n- 💻 技术实现评估\n- 🖼️ 视觉内容分析\n- 🎯 综合评估建议\n\n---\n*由 Beaver DSL 框架自动生成*"]
+  
+  [:p "✅ 图像分析综合处理流程完成"]
+  [:p "📁 结果保存在 image_analysis_results/ 目录下"]
+] 

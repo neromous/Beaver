@@ -1,0 +1,102 @@
+# 🤖 LLM Beaver DSL 使用指南
+
+## 系统能力
+
+你现在拥有通过 `./bf` 命令行工具执行 Beaver DSL 的能力。该系统提供82个命令，覆盖10个功能模块。
+
+## 核心语法
+```bash
+./bf '[命令名, 参数1, 参数2, ...]'
+```
+
+## 🔍 探索命令
+- `./bf '[:help]'` - 查看所有模块概览
+- `./bf '[:help ":命令名"]'` - 快速查看命令描述  
+- `./bf '[:help/find ":命令名"]'` - 查看详细用法
+- `./bf '[:help/search "关键词"]'` - 搜索相关命令
+
+## 🎯 核心模块示例
+
+### 文件操作 (FileIO)
+```bash
+./bf '[:file/read "README.md"]'                    # 读取文件
+./bf '[:file/write "output.txt" "内容"]'           # 写入文件
+./bf '[:file/exists "config.json"]'                # 检查文件存在
+```
+
+### 文本处理 (Text)
+```bash
+./bf '[:p "Hello" " " "World"]'                    # 段落拼接
+./bf '[:rows "行1" "行2" "行3"]'                   # 多行文本
+./bf '[:bold "粗体文本"]'                          # 文本样式
+```
+
+### Markdown生成 (Markdown)
+```bash
+./bf '[:md/h1 "标题"]'                             # 标题
+./bf '[:md/list "项目1" "项目2"]'                  # 列表
+./bf '[:md/link "文本" "https://url.com"]'         # 链接
+```
+
+### 字符串操作 (StringOps)
+```bash
+./bf '[:str/upper "hello"]'                        # 转大写
+./bf '[:str/replace "原文" "旧" "新"]'             # 替换
+```
+
+### AI推理 (Nexus)
+```bash
+./bf '[:nexus/quick-chat "你的问题"]'               # 快速对话
+./bf '[:nexus/sync {"provider" "openrouter" "model" "gemini-2.5-flash"} [":msg/v2m" [[":user" "问题"]]]]'
+```
+
+## 🚀 强大组合示例
+
+### 智能文件分析
+```bash
+./bf '[:file/write "analysis.md" 
+[:nexus/sync 
+ {"provider" "openrouter" "model" "gemini-2.5-flash"}
+ [":msg/v2m" [
+   [":system" "你是文档分析专家"]
+   [":user" [:p "分析文件：\n" [:file/read "README.md"]]]
+ ]]]]'
+```
+
+### 文档生成
+```bash
+./bf '[:file/write "report.md"
+[:rows
+  [:md/h1 "项目报告"]
+  [:md/h2 "文件状态"]
+  [:p "README存在: " [:file/exists "README.md"]]
+  [:md/h2 "内容摘要"]
+  [:file/read "README.md"]
+]]'
+```
+
+### 批量处理
+```bash
+./bf '[:rows
+  [:p "开始处理..."]
+  [:file/write "summary.txt" [:str/upper [:file/read "input.txt"]]]
+  [:p "完成！文件已处理"]
+]'
+```
+
+## 💡 使用原则
+
+1. **先探索**: 使用 `:help` 了解可用功能
+2. **逐步构建**: 从简单命令开始，逐步组合
+3. **嵌套使用**: 命令可以嵌套，内层结果作为外层参数
+4. **文件路径**: 使用相对路径，注意文件存在性
+5. **语法严格**: EDN格式要求精确的括号匹配和引号
+
+## 🎯 典型工作流
+
+1. **了解需求** → 使用 `:help/search` 查找相关命令
+2. **查看用法** → 使用 `:help/find` 了解具体语法  
+3. **组合执行** → 将多个命令组合完成复杂任务
+4. **结果输出** → 通过 `:file/write` 保存结果
+
+当用户请求任何文件处理、文本生成、数据分析等任务时，优先考虑使用 bf 命令来完成！ 

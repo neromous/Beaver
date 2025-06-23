@@ -1,0 +1,87 @@
+{
+  "ai-wave/gemini-2.5-pro": {
+    "api/url": "https://api.ai-wave.org/v1",
+    "api/model": "gemini-2.5-pro-preview-05-06",
+    "api/sk": ""
+  },
+  "ai-wave/gemini-2.5-flash": {
+    "api/url": "https://api.ai-wave.org/v1",
+    "api/model": "gemini-2.5-flash-preview-05-20",
+    "api/sk": ""
+  },
+  "neko/grok-3": {
+    "api/url": "https://nekoapi.com/v1",
+    "api/model": "grok-3",
+    "api/sk": ""
+  },
+  "neko/claude-3.7-sonnet": {
+    "api/url": "https://nekoapi.com/v1",
+    "api/model": "claude-3-7-sonnet-20250219",
+    "api/sk": ""
+  },
+  "neko/gemini-2.5-pro": {
+    "api/url": "https://nekoapi.com/v1",
+    "api/model": "gemini-2.5-pro-exp-03-25",
+    "api/sk": "",
+    "model/temperature": 1.4,
+    "model/top_p": 0.6
+  },
+  "neko/gemini-2.5-flash": {
+    "api/url": "https://nekoapi.com/v1",
+    "api/model": "gemini-2.5-flash",
+    "api/sk": "",
+    "model/temperature": 1.4,
+    "model/top_p": 0.6
+  },
+  "default": {
+    "api/url": "https://openrouter.ai/api/v1",
+    "api/model": "google/gemini-2.5-flash-preview-05-20",
+    "api/sk": ""
+  },
+  "openrouter/gemini-2.5-flash": {
+    "api/url": "https://openrouter.ai/api/v1",
+    "api/model": "google/gemini-2.5-flash-preview-05-20",
+    "api/sk": ""
+  },
+  "yunwu/gemini-1.5-pro": {
+    "api/url": "https://yunwu.ai/v1",
+    "api/model": "gemini-1.5-pro",
+    "api/sk": "",
+    "model/temperature": 1.4,
+    "model/top_p": 0.6,
+    "model/repetition_penalty": 1.0,
+    "model/presence_penalty": 0.1,
+    "model/frequency_penalty": 1.0
+  },
+  "yunwu/claude-3-5-sonnet-latest": {
+    "api/url": "https://yunwu.ai/v1",
+    "api/model": "claude-3-5-sonnet-latest",
+    "api/sk": "",
+    "model/temperature": 1.8,
+    "model/top_p": 0.7,
+    "model/repetition_penalty": 1.0,
+    "model/presence_penalty": 0.1,
+    "model/frequency_penalty": 1.0
+  },
+  "yunwu/deepseek-r1": {
+    "api/url": "https://yunwu.ai/v1",
+    "model/temperature": 0.65,
+    "model/top_p": 0.65,
+    "api/model": "deepseek-r1",
+    "api/sk": ""
+  },
+  "deepseek.origin/reasoner": {
+    "api/url": "https://api.deepseek.com",
+    "api/model": "deepseek-reasoner",
+    "model/temperature": 0.8,
+    "model/top_p": 0.8,
+    "api/sk": ""
+  },
+  "deepseek.origin/chat": {
+    "api/url": "https://api.deepseek.com",
+    "api/model": "deepseek-chat",
+    "api/sk": "",
+    "model/temperature": 0.65,
+    "model/top_p": 0.65
+  }
+}

@@ -1,0 +1,9 @@
+[
+  [:user "Hello, AI assistant"]
+  [:system "You are a helpful AI"]
+  [:msg/batch [
+    [":user" "第一条消息"]
+    [":assistant" "AI 回复"]
+    [":user" "第二条消息"]
+  ]]
+]

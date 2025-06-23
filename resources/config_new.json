@@ -1,0 +1,142 @@
+{
+  "providers": {
+    "ai-wave": {
+      "gemini-2.5-pro": {
+        "api": {
+          "url": "https://api.ai-wave.org/v1",
+          "model": "gemini-2.5-pro-preview-05-06",
+          "secret_key": ""
+        }
+      },
+      "gemini-2.5-flash": {
+        "api": {
+          "url": "https://api.ai-wave.org/v1",
+          "model": "gemini-2.5-flash-preview-05-20",
+          "secret_key": ""
+        }
+      }
+    },
+    "neko": {
+      "grok-3": {
+        "api": {
+          "url": "https://nekoapi.com/v1",
+          "model": "grok-3",
+          "secret_key": ""
+        }
+      },
+      "claude-3.7-sonnet": {
+        "api": {
+          "url": "https://nekoapi.com/v1",
+          "model": "claude-3-7-sonnet-20250219",
+          "secret_key": ""
+        }
+      },
+      "gemini-2.5-pro": {
+        "api": {
+          "url": "https://nekoapi.com/v1",
+          "model": "gemini-2.5-pro-exp-03-25",
+          "secret_key": ""
+        },
+        "model": {
+          "temperature": 1.4,
+          "top_p": 0.6
+        }
+      },
+      "gemini-2.5-flash": {
+        "api": {
+          "url": "https://nekoapi.com/v1",
+          "model": "gemini-2.5-flash",
+          "secret_key": ""
+        },
+        "model": {
+          "temperature": 1.4,
+          "top_p": 0.6
+        }
+      }
+    },
+    "openrouter": {
+      "gemini-2.5-flash": {
+        "api": {
+          "url": "https://openrouter.ai/api/v1",
+          "model": "google/gemini-2.5-flash-preview-05-20",
+          "secret_key": ""
+        }
+      }
+    },
+    "yunwu": {
+      "gemini-1.5-pro": {
+        "api": {
+          "url": "https://yunwu.ai/v1",
+          "model": "gemini-1.5-pro",
+          "secret_key": ""
+        },
+        "model": {
+          "temperature": 1.4,
+          "top_p": 0.6,
+          "repetition_penalty": 1.0,
+          "presence_penalty": 0.1,
+          "frequency_penalty": 1.0
+        }
+      },
+      "claude-3-5-sonnet-latest": {
+        "api": {
+          "url": "https://yunwu.ai/v1",
+          "model": "claude-3-5-sonnet-latest",
+          "secret_key": ""
+        },
+        "model": {
+          "temperature": 1.8,
+          "top_p": 0.7,
+          "repetition_penalty": 1.0,
+          "presence_penalty": 0.1,
+          "frequency_penalty": 1.0
+        }
+      },
+      "deepseek-r1": {
+        "api": {
+          "url": "https://yunwu.ai/v1",
+          "model": "deepseek-r1",
+          "secret_key": ""
+        },
+        "model": {
+          "temperature": 0.65,
+          "top_p": 0.65
+        }
+      }
+    },
+    "deepseek": {
+      "reasoner": {
+        "api": {
+          "url": "https://api.deepseek.com",
+          "model": "deepseek-reasoner",
+          "secret_key": ""
+        },
+        "model": {
+          "temperature": 0.8,
+          "top_p": 0.8
+        }
+      },
+      "chat": {
+        "api": {
+          "url": "https://api.deepseek.com",
+          "model": "deepseek-chat",
+          "secret_key": ""
+        },
+        "model": {
+          "temperature": 0.65,
+          "top_p": 0.65
+        }
+      }
+    }
+  },
+  "default": {
+    "provider": "openrouter",
+    "model": "gemini-2.5-flash"
+  },
+  "settings": {
+    "cache_enabled": true,
+    "timeout": 30,
+    "retry_attempts": 3,
+    "log_level": "INFO"
+  }
+} 
