@@ -149,6 +149,27 @@ echo '[:p "🎉 来自卷轴的问候！"]' | ./bf
 ./bf '[:path/cwd]'                  # 显示当前位置
 ./bf '[:path/resolve "file.txt"]'   # 解析文件路径
 ./bf '[:path/info "file.txt"]'      # 显示详细路径信息
+
+# 🛡️ 沙箱白名单安全机制
+# 默认情况下，Beaver 允许自由访问文件系统。如果你想限制脚本只能访问特定目录，
+# 可以使用以下 **Sandbox** 咒语动态管理白名单：
+#
+#   • `:sandbox/list`   查看当前允许访问的目录
+#   • `:sandbox/allow`  追加一个目录到白名单
+#   • `:sandbox/set`    覆盖式设置白名单（不传参数 = 取消所有限制）
+#   • `:sandbox/clear`  清空白名单，恢复无限制
+#
+# 一旦设置了白名单，所有 `:file/*` 与 `:dir/*` 操作都会在执行前做路径校验。
+# 若目标路径不在白名单内，将抛出 `PermissionError`，避免误删/越权访问。
+#
+# 示例：
+# ```bash
+# # 只允许访问当前项目目录
+# ./bf '[:sandbox/allow "."]'
+#
+# # 现在尝试读取其他目录文件将会失败
+# ./bf '[:file/read "/etc/passwd"]'   # ⇒ PermissionError
+# ```
 ```
 
 ### 🤖 **AI 魔法对话**

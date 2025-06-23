@@ -19,6 +19,10 @@ class PathResolver:
         self._cwd = os.getcwd()
         self._script_dir = None
         
+        # 权限沙箱：允许访问的目录白名单（绝对路径列表）
+        # 为空时表示不限制。
+        self._allowed_dirs = []
+        
     def set_script_directory(self, script_path: str) -> None:
         """
         设置脚本所在目录
@@ -57,13 +61,18 @@ class PathResolver:
             解析后的绝对路径
         """
         file_path = str(file_path)
-        
-        # 如果已经是绝对路径，直接返回
+
         if os.path.isabs(file_path):
-            return file_path
+            abs_path = os.path.abspath(file_path)
+        else:
+            # 对于相对路径，相对于当前工作目录解析
+            abs_path = os.path.abspath(os.path.join(self._cwd, file_path))
         
-        # 对于相对路径，相对于当前工作目录解析
-        return os.path.abspath(os.path.join(self._cwd, file_path))
+        # 沙箱校验
+        if not self._is_path_allowed(abs_path):
+            raise PermissionError(f"路径 '{file_path}' 不在允许的沙箱目录内，已被拒绝访问")
+        
+        return abs_path
     
     def resolve_relative_to_cwd(self, file_path: Union[str, Path]) -> str:
         """
@@ -161,6 +170,49 @@ class PathResolver:
             'script_directory': self._script_dir
         }
 
+    # ---------------------------------------------------------------------
+    # 允许目录白名单相关 API
+    # ---------------------------------------------------------------------
+
+    def set_allowed_directories(self, dirs):
+        """一次性设置允许访问的目录白名单
+
+        Args:
+            dirs: Iterable[str | Path] 目录路径集合
+        """
+        abs_dirs = [os.path.abspath(str(d)) for d in dirs]
+        self._allowed_dirs = abs_dirs
+
+    def add_allowed_directory(self, dir_path):
+        """向白名单追加一个目录"""
+        abs_dir = os.path.abspath(str(dir_path))
+        if abs_dir not in self._allowed_dirs:
+            self._allowed_dirs.append(abs_dir)
+
+    def clear_allowed_directories(self):
+        """清空白名单，表示无限制"""
+        self._allowed_dirs = []
+
+    def list_allowed_directories(self):
+        """返回当前白名单列表"""
+        return list(self._allowed_dirs)
+
+    # ---------------------------------------------------------------------
+    # 内部工具方法
+    # ---------------------------------------------------------------------
+
+    def _is_path_allowed(self, abs_path: str) -> bool:
+        """判断绝对路径是否位于白名单目录下"""
+        if not self._allowed_dirs:  # 空白名单 -> 不限制
+            return True
+
+        # 确保比较时目录末尾带路径分隔符，防止 /foo 与 /foobar 混淆
+        for allow_dir in self._allowed_dirs:
+            allow_dir_with_sep = os.path.join(allow_dir, '')
+            if abs_path.startswith(allow_dir_with_sep) or abs_path == allow_dir:
+                return True
+        return False
+
 # 全局路径解析器实例
 _global_resolver = PathResolver()
 
@@ -198,8 +250,29 @@ def resolve_file_path(file_path: Union[str, Path]) -> str:
     Returns:
         解析后的绝对路径
     """
+    # 直接调用 PathResolver 的解析方法，其中已包含白名单校验
     return _global_resolver.resolve_path(file_path)
 
 def get_current_directory() -> str:
     """获取当前工作目录"""
-    return _global_resolver.get_current_directory() 
+    return _global_resolver.get_current_directory()
+
+# ============================
+# 白名单便捷函数
+# ============================
+
+def set_allowed_directories(dirs):
+    """一次性设置允许访问的目录白名单"""
+    _global_resolver.set_allowed_directories(dirs)
+
+def add_allowed_directory(dir_path):
+    """向白名单追加一个目录"""
+    _global_resolver.add_allowed_directory(dir_path)
+
+def clear_allowed_directories():
+    """清空白名单限制"""
+    _global_resolver.clear_allowed_directories()
+
+def list_allowed_directories():
+    """返回白名单列表"""
+    return _global_resolver.list_allowed_directories() 

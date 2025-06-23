@@ -18,6 +18,7 @@ import beaver.styles.markdown
 
 # 导入功能模块（自动注册函数）
 import beaver.func.utils.string_ops
+import beaver.func.utils.sandbox
 import beaver.func.io.file_ops
 
 # 导入文件IO模块（自动注册函数）
